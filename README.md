@@ -1,3 +1,9 @@
+
+<p align="center">
+  <img src="image.png" alt="Startup Success Prediction Project Cover Image" width="800">
+</p>
+<br>
+
 # Startup Success Prediction Project
 
 This project is for the DSA210 course. The goal is to study which **early observable features** of startups are associated with **eventual success or failure**, using a combination of:
