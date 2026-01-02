@@ -20,7 +20,9 @@ Success is defined as the startup being *operating / acquired / IPO*, while fail
 All raw data are under the `data/` folder:
 
 - `startup_success.csv` – startup outcomes, locations, basic funding info and relationships.
+Resource: https://www.kaggle.com/datasets/manishkc06/startup-success-prediction
 - `investments_VC.csv` – detailed funding amounts per round type (seed, A, B, …).
+Resource: https://www.kaggle.com/datasets/arindam235/startup-investments-crunchbase/
 
 The project **enriches** the main outcome dataset (`startup_success.csv`) with round-level funding information from `investments_VC.csv`.
 
@@ -55,9 +57,21 @@ The project is organized into several steps that roughly follow the course struc
      - **early funding size / seed proportions**
      are statistically different between successful and failed startups.
 
-4. **Step 3 – Modeling (planned)**
-   - Use the cleaned and enriched features to build a simple predictive model (e.g. logistic regression / tree-based model).
-   - Evaluate performance with appropriate metrics (e.g. accuracy, precision/recall, ROC-AUC).
+4. **Step 3 – Modeling**
+   - Modeling is done in a separate notebook (`ML.ipynb`) using the feature table exported at the end of Step 2 (as a **parquet** file).
+   - Features used:
+     - `rel_per_round`, `avg_participants`, `age_first_funding_year`,
+       `early_total_funding_usd`, `seed_share_total`, `seed_over_avg_round`
+   - Models:
+     - Baseline: Dummy classifier (always predicts the majority class)
+     - Logistic Regression
+     - Decision Tree (GridSearchCV)
+     - Random Forest (GridSearchCV)
+   - Evaluation:
+     - Accuracy, Precision, Recall, F1, ROC-AUC + Confusion Matrix
+   - Thresholding:
+     - **0.50 default threshold** (standard classification cutoff)
+     - Additionally, a threshold sweep is performed to show the precision/recall trade-off.
 
 5. **Step 4 – Interpretation & Reporting (planned)**
    - Summarize which early features are most informative in the model.
@@ -72,6 +86,10 @@ The project is organized into several steps that roughly follow the course struc
 data/
     startup_success.csv
     investments_VC.csv
+    processed/
+      step2_dataset.parquet
 
-EDA.ipynb     # Main notebook: Step 1 (cleaning/merging) + Step 2 (EDA & H1–H6 tests)
+EDA & Hypothesis Testing.ipynb     # Step 1 (cleaning/merging) + Step 2 (EDA & H1–H6 tests)
+ML.ipynb      # Step 3 (modeling + threshold sweep + feature importance)
+image.png     # Cover Image
 README.md     # This file
